@@ -44,24 +44,25 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- Name: blackhol; Type: TABLE; Schema: public; Owner: freecodecamp
+-- Name: blackhole; Type: TABLE; Schema: public; Owner: freecodecamp
 --
 
-CREATE TABLE public.blackhol (
+CREATE TABLE public.blackhole (
     blackhole_id integer NOT NULL,
     gravity integer,
     galaxy_id integer,
-    wormhole boolean DEFAULT false NOT NULL
+    wormhole boolean DEFAULT false,
+    name character varying(255) NOT NULL
 );
 
 
-ALTER TABLE public.blackhol OWNER TO freecodecamp;
+ALTER TABLE public.blackhole OWNER TO freecodecamp;
 
 --
--- Name: blackhol_blackhole_id_seq; Type: SEQUENCE; Schema: public; Owner: freecodecamp
+-- Name: blackhole_blackhole_id_seq; Type: SEQUENCE; Schema: public; Owner: freecodecamp
 --
 
-CREATE SEQUENCE public.blackhol_blackhole_id_seq
+CREATE SEQUENCE public.blackhole_blackhole_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -70,13 +71,13 @@ CREATE SEQUENCE public.blackhol_blackhole_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.blackhol_blackhole_id_seq OWNER TO freecodecamp;
+ALTER TABLE public.blackhole_blackhole_id_seq OWNER TO freecodecamp;
 
 --
--- Name: blackhol_blackhole_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: freecodecamp
+-- Name: blackhole_blackhole_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: freecodecamp
 --
 
-ALTER SEQUENCE public.blackhol_blackhole_id_seq OWNED BY public.blackhol.blackhole_id;
+ALTER SEQUENCE public.blackhole_blackhole_id_seq OWNED BY public.blackhole.blackhole_id;
 
 
 --
@@ -228,10 +229,10 @@ ALTER SEQUENCE public.star_star_id_seq OWNED BY public.star.star_id;
 
 
 --
--- Name: blackhol blackhole_id; Type: DEFAULT; Schema: public; Owner: freecodecamp
+-- Name: blackhole blackhole_id; Type: DEFAULT; Schema: public; Owner: freecodecamp
 --
 
-ALTER TABLE ONLY public.blackhol ALTER COLUMN blackhole_id SET DEFAULT nextval('public.blackhol_blackhole_id_seq'::regclass);
+ALTER TABLE ONLY public.blackhole ALTER COLUMN blackhole_id SET DEFAULT nextval('public.blackhole_blackhole_id_seq'::regclass);
 
 
 --
@@ -263,15 +264,13 @@ ALTER TABLE ONLY public.star ALTER COLUMN star_id SET DEFAULT nextval('public.st
 
 
 --
--- Data for Name: blackhol; Type: TABLE DATA; Schema: public; Owner: freecodecamp
+-- Data for Name: blackhole; Type: TABLE DATA; Schema: public; Owner: freecodecamp
 --
 
-INSERT INTO public.blackhol VALUES (1, 0, 1, false);
-INSERT INTO public.blackhol VALUES (2, 0, 2, false);
-INSERT INTO public.blackhol VALUES (3, 0, 3, false);
-INSERT INTO public.blackhol VALUES (4, 0, 4, false);
-INSERT INTO public.blackhol VALUES (5, 0, 5, false);
-INSERT INTO public.blackhol VALUES (6, 0, 6, false);
+INSERT INTO public.blackhole VALUES (1, NULL, NULL, false, 'vape');
+INSERT INTO public.blackhole VALUES (2, NULL, NULL, false, 'Bolita de vencorup');
+INSERT INTO public.blackhole VALUES (3, NULL, NULL, false, 'contigo');
+INSERT INTO public.blackhole VALUES (4, NULL, NULL, false, 'laptop');
 
 
 --
@@ -344,10 +343,10 @@ INSERT INTO public.star VALUES (6, 10000, 'purple', 'Rick', 5);
 
 
 --
--- Name: blackhol_blackhole_id_seq; Type: SEQUENCE SET; Schema: public; Owner: freecodecamp
+-- Name: blackhole_blackhole_id_seq; Type: SEQUENCE SET; Schema: public; Owner: freecodecamp
 --
 
-SELECT pg_catalog.setval('public.blackhol_blackhole_id_seq', 6, true);
+SELECT pg_catalog.setval('public.blackhole_blackhole_id_seq', 4, true);
 
 
 --
@@ -379,11 +378,19 @@ SELECT pg_catalog.setval('public.star_star_id_seq', 6, true);
 
 
 --
--- Name: blackhol blackhol_pkey; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+-- Name: blackhole blackhole_name_key; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
 --
 
-ALTER TABLE ONLY public.blackhol
-    ADD CONSTRAINT blackhol_pkey PRIMARY KEY (blackhole_id);
+ALTER TABLE ONLY public.blackhole
+    ADD CONSTRAINT blackhole_name_key UNIQUE (name);
+
+
+--
+-- Name: blackhole blackhole_pkey; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.blackhole
+    ADD CONSTRAINT blackhole_pkey PRIMARY KEY (blackhole_id);
 
 
 --
@@ -408,6 +415,30 @@ ALTER TABLE ONLY public.moon
 
 ALTER TABLE ONLY public.moon
     ADD CONSTRAINT moon_pkey PRIMARY KEY (moon_id);
+
+
+--
+-- Name: galaxy name_unique; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.galaxy
+    ADD CONSTRAINT name_unique UNIQUE (name);
+
+
+--
+-- Name: planet name_unique_planet; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.planet
+    ADD CONSTRAINT name_unique_planet UNIQUE (name);
+
+
+--
+-- Name: star name_unique_star; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.star
+    ADD CONSTRAINT name_unique_star UNIQUE (name);
 
 
 --
@@ -453,3 +484,4 @@ ALTER TABLE ONLY public.planet
 --
 -- PostgreSQL database dump complete
 --
+
